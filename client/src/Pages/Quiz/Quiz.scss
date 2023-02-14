@@ -1,0 +1,134 @@
+.QuizPageQuestion {
+  @media screen and (min-width: 600px) {
+    padding-left: 20%;
+    padding-right: 20%;
+    padding-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+  }
+
+  @media screen and (max-width: 600px) {
+    height: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+
+  .quiz {
+    padding: 1rem;
+
+    .quiz-name {
+      font-size: large;
+      float: left;
+    }
+
+    .timer {
+      float: right;
+    }
+  }
+
+  .code-question {
+    margin: 1rem;
+    margin-top: 0;
+
+    @media screen and (max-width: 600px) {
+      margin-top: 2rem;
+    }
+  }
+
+  .hashtags {
+    margin-left: 1rem;
+    margin-top: 0;
+    color: #a1a0a0;
+    font-size: x-small;
+
+  }
+
+  .question-headline {
+    display: flex;
+    justify-content: space-between;
+
+    .question-h4 {
+      margin: 1rem;
+      margin-left: 1rem;
+    }
+
+  }
+
+  .choose-option {
+    margin-left: 1rem;
+    font-size: small;
+  }
+
+  .answer-options {
+    display: grid;
+    padding: 1rem;
+    gap: 1rem;
+    grid-template-columns: 1fr 1fr;
+
+    @media only screen and (max-width: 600px) {
+      grid-template-columns: 1fr;
+    }
+
+    .options {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 15px 20px;
+      border-radius: 7px;
+      cursor: pointer;
+      background-color: #edeeee;
+      // background-color: #b7ffa6;  correct answer color
+      // background-color: #ffc2c2;  wrong answer color
+    }
+  }
+
+  .how-works {
+    margin-top: 1rem;
+    font-size: small;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+
+    .material-symbols-outlined {
+      margin-right: 10px;
+    }
+
+    @media screen and (max-width: 600px) {
+      padding-bottom: 100px;
+    }
+  }
+
+  .nxt_btn_cont {
+    @media screen and (max-width: 600px) {
+      position: fixed;
+      bottom: 0;
+      margin: 0;
+      width: 100%;
+      background-color: rgb(255, 255, 255);
+
+      .next-question {
+        width: calc(100% - 2rem);
+      }
+    }
+
+    .next-question {
+      margin-top: 4rem;
+      margin: 1rem;
+      height: 3rem;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #5d53ce;
+      color: white;
+      cursor: pointer;
+
+
+    }
+  }
+}

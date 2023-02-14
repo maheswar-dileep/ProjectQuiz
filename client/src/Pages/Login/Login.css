@@ -1,0 +1,131 @@
+.LoginPage {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.LoginPage .ExistingUser {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  flex-direction: column;
+  text-align: center;
+  gap: 10px;
+  box-sizing: border-box;
+  padding: 20px;
+}
+.LoginPage .ExistingUser img {
+  max-width: 200px;
+  margin-bottom: 10px;
+}
+.LoginPage .ExistingUser button {
+  padding: 20px;
+  box-sizing: border-box;
+  width: 100%;
+  border: none;
+  background-color: var(--themeColor);
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.LoginPage .ExistingUser.show {
+  display: flex;
+}
+.LoginPage .container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+  padding: 25px;
+  max-width: 450px;
+}
+.LoginPage .container .dispState {
+  padding: 15px 25px;
+  background-color: rgb(240, 240, 255);
+  border-radius: 5px;
+  text-transform: capitalize;
+  text-align: center;
+}
+.LoginPage .container .dispState.err {
+  background-color: rgb(255, 235, 235);
+}
+.LoginPage .container input {
+  padding: 20px;
+  box-sizing: border-box;
+  width: 100%;
+  border: 1px solid #adadad;
+  outline: none;
+  border-radius: 5px;
+}
+.LoginPage .container input:focus {
+  border-color: blue;
+}
+.LoginPage .container input.err {
+  border-color: red;
+}
+.LoginPage .container input:nth-child(2) {
+  margin: 10px 0;
+}
+.LoginPage .container p {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 10px 5px 25px 5px;
+}
+.LoginPage .container p span {
+  cursor: pointer;
+}
+.LoginPage .container button {
+  padding: 20px;
+  box-sizing: border-box;
+  width: 100%;
+  border: none;
+  background-color: var(--themeColor);
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+.LoginPage .container .signup {
+  cursor: pointer;
+}
+.LoginPage .container .or {
+  width: 100%;
+  display: grid;
+  align-items: center;
+  grid-template-columns: auto 20px auto;
+  gap: 20px;
+}
+.LoginPage .container .or span {
+  text-align: center;
+}
+.LoginPage .container .providers {
+  width: 100%;
+}
+.LoginPage .container .providers img {
+  width: 25px;
+}
+.LoginPage .container .providers .g {
+  background-color: white;
+  border: 1px solid rgb(173, 173, 173);
+  color: black;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  padding: 15px;
+  margin-bottom: 10px;
+}/*# sourceMappingURL=Login.css.map */

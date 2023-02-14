@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "auth_server":"npm start --prefix auth",
-    "client_app":"npm start --prefix client",
-    "start":"concurrently \"npm run auth_server\" \"npm run client_app\""
+    "auth_server": "npm start --prefix auth",
+    "auth_server_build": "npm run build --prefix auth",
+    "client_app": "npm start --prefix client",
+    "start": "concurrently \"npm run auth_server_build\" \"npm run auth_server\" \"npm run client_app\""
   },
   "author": "",
   "license": "ISC",

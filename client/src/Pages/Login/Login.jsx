@@ -7,7 +7,7 @@ import { useState } from "react";
 import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { authConfig } from "../../Services/Firebase";
 import { useRef } from "react";
-import { backend } from "../../Services/Axios";
+import { authServer } from "../../Services/Axios";
 
 function Login() {
   const passwordInput = useRef("");
@@ -63,7 +63,7 @@ function Login() {
       // success response
       showStatus("Connecting to server");
       // request to server and getting token response from server
-      const response = await backend.post("/auth/signin", { idToken: idToken });
+      const response = await authServer.post("/signin", { idToken: idToken });
       localStorage.setItem("accessToken", response?.data?.accessToken);
       localStorage.setItem("refreshToken", response?.data?.refreshToken);
       setStatusDisplay({

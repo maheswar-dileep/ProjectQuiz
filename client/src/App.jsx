@@ -7,8 +7,7 @@ import SideBar from "./components/SideBar/SideBar";
 import LoaderFullPage from "./context/LoaderFullPage";
 import User from "./context/User";
 
-
-//Importing Pages 
+//Importing Pages
 
 import Home from "./Pages/Home/Home";
 import Login from "./Pages/Login/Login";
@@ -19,7 +18,7 @@ import Step1 from "./Pages/Step1/Step1";
 import Step2 from "./Pages/Step2/Step2";
 import Step3 from "./Pages/Step3/Step3";
 import Step4 from "./Pages/Step4/Step4";
-import { backend } from "./Services/Axios";
+import { authServer } from "./Services/Axios";
 
 function App() {
   // constants
@@ -42,7 +41,7 @@ function App() {
       else
         try {
           // get user data from server
-          const res = await backend.get("/user_data", { headers: { authorization: `Bearer ${accessToken}` } });
+          const res = await authServer.get("/user_data", { headers: { authorization: `Bearer ${accessToken}` } });
           // set user data;
           setUser(res.data?.data);
           return true;
@@ -53,7 +52,7 @@ function App() {
             // headers whith refresh token
             const headers = { headers: { authorization: `Bearer ${refreshToken}` } };
             // new access token response from server
-            const res = await backend.post("/auth/generate_refresh_token", {}, headers);
+            const res = await authServer.post("/generate_refresh_token", {}, headers);
             // save new access token to local storage
             localStorage.setItem("accessToken", res.data?.data?.accessToken);
             // re requesting data from server

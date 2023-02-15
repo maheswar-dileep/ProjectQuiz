@@ -1,5 +1,5 @@
 import { NextFunction, Response } from "express";
-import { RequestDefention } from "./defeniton.js";
+import { RequestDefention } from "../defeniton.js";
 
 export default (req: RequestDefention, res: Response, next: NextFunction) => {
   // TODO

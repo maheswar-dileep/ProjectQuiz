@@ -8,7 +8,12 @@
     "auth_server": "npm start --prefix auth",
     "auth_server_build": "npm run build --prefix auth",
     "client_app": "npm start --prefix client",
-    "start": "concurrently \"npm run auth_server_build\" \"npm run auth_server\" \"npm run client_app\""
+    "admin_client_app": "npm start --prefix admin_client",
+    "notification_server": "npm start --prefix notification",
+    "notification_server_build": "npm run build --prefix notification",
+    "question_server": "npm start --prefix question",
+    "question_server_build": "npm run build --prefix question",
+    "start": "concurrently \"npm run auth_server_build\" \"npm run auth_server\" \"npm run client_app\" \"npm run admin_client_app\" \"npm run notification_server\" \"npm run notification_server_build\" \"npm run question_server\" \"npm run question_server_build\""
   },
   "author": "",
   "license": "ISC",

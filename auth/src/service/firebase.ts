@@ -1,6 +1,6 @@
 import { initializeApp, applicationDefault } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
-import { createError } from "./util.js";
+import { createError } from "../util.js";
 
 initializeApp({
   credential: applicationDefault(),

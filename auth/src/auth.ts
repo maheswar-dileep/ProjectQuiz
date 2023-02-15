@@ -1,8 +1,8 @@
 import validator from "validator";
 import jwt from "jsonwebtoken";
-import * as db from "./mongoDB.js";
+import * as db from "./service/mongoDB.js";
 import { createError } from "./util.js";
-import { verifyIdToken } from "./firebase.js";
+import { verifyIdToken } from "./service/firebase.js";
 
 import dotenv from "dotenv";
 import { RequestDefention } from "./defeniton.js";

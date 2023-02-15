@@ -3,8 +3,9 @@ import validator from "validator";
 import cors from "cors";
 
 import { createError } from "./util.js";
-import * as Auth from "./auth.js";
+import * as auth from "./auth.js";
 import { RequestDefention } from "./defeniton.js";
+import checks from "./checks.js";
 
 const server = Express();
 const app = Express.Router();
@@ -17,16 +18,17 @@ const appConfig = {
 
 app.use(cors());
 app.use(Express.json());
-app.use(Auth.authInit);
+app.use(auth.authInit);
+app.use(checks);
 
-app.get("/user_data", Auth.mustLoginAsUser, (req: RequestDefention, res) => {
+app.get("/user_data", auth.mustLoginAsUser, (req: RequestDefention, res) => {
   res.send({ error: false, data: req.user });
 });
 
 app.post("/signin", async (req, res) => {
   try {
     // creates user
-    const resData = await Auth.signInUser(req.body);
+    const resData = await auth.signInUser(req.body);
     // sending response
     res.send({ error: false, ...resData });
   } catch (error) {
@@ -39,7 +41,7 @@ app.post("/generate_refresh_token", async (req, res) => {
   try {
     const refreshToken = req.headers["authorization"]?.split(" ")[1];
     if (!validator.default.isJWT(refreshToken + "")) throw createError(400, "Invalid refresh token");
-    const NewAccessTocken = await Auth.getNewAccessTockenFromRefreshToken(refreshToken);
+    const NewAccessTocken = await auth.getNewAccessTockenFromRefreshToken(refreshToken);
     // sending new access token
     res.send({ error: false, data: { accessToken: NewAccessTocken } });
   } catch (error) {
@@ -55,6 +57,7 @@ app.use((req, res) => {
   res.status(404);
   res.send({
     error: true,
+    server: "auth",
     message: "The service you are looking for is not found on this server",
   });
 });

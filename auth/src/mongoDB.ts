@@ -36,6 +36,7 @@ export const users = db.model(
       default: {
         languages: [],
         subjects: [],
+        knowlageLevel: Number,
         difficulty: {
           type: Number,
           default: 0,

@@ -5,7 +5,13 @@ import validator from "validator";
 import { createError } from "../util.js";
 
 export const getUserData = (req: RequestDefention, res: Response) => {
-  res.send({ error: false, data: req.user });
+  const userData: { name: string; photoURL: string; email: string; steps: number } = {
+    name: req?.user?.name,
+    photoURL: req?.user?.photoURL,
+    email: req?.user?.email,
+    steps: req?.user?.steps,
+  };
+  res.send({ error: false, data: userData });
 };
 
 export const signIn = async (req: RequestDefention, res: Response) => {
@@ -20,7 +26,7 @@ export const signIn = async (req: RequestDefention, res: Response) => {
   }
 };
 
-export const generateRefreshToken = async (req: RequestDefention, res: Response) => {
+export const generateAccessToken = async (req: RequestDefention, res: Response) => {
   try {
     const refreshToken = req.headers["authorization"]?.split(" ")[1];
     if (!validator.default.isJWT(refreshToken + "")) throw createError(400, "Invalid refresh token");

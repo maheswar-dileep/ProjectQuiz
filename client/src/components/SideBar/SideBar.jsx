@@ -71,7 +71,7 @@ function SideBar(PageContent) {
 
             {userContext?.user && (
               <div className="userData">
-                <img src="/img/Profile-Demo.jpg" alt="img" className="profile-img" />
+                <img src={`${userContext?.user?.photoURL?userContext?.user?.photoURL:"/img/Profile-Demo.jpg"}`} alt="img" className="profile-img" />
                 {show && (
                   <div className="userInfo">
                     <b>{userContext?.user?.name}</b>

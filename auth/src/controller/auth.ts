@@ -34,18 +34,44 @@ export const getRefreshTokenData = (accessTocken: string) => {
 export const newRefreshToken = (payload: object) => jwt.sign({ ...payload }, process.env.REFRESH_TOKEN_SECRET);
 export const newAccessToken = (payload: { uid: string }) =>
   jwt.sign({ uid: payload.uid }, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: "1m",
+    expiresIn: "20s",
   });
 
 export const getNewAccessTockenFromRefreshToken = async (refreshToken: string) => {
   try {
-    const tockenSavedInDB = await db.refreshTockens.findOne({ value: refreshToken });
-    if (!tockenSavedInDB) throw "Invalid refresh token";
+    try {
+      const tockenSavedInDB = await db.refreshTockens.findOne({ value: refreshToken });
+      if (!tockenSavedInDB) throw "Invalid refresh token";
+    } catch (error) {
+      throw typeof error == "string" ? createError(400, error) : "Faild to create token";
+    }
     const payload: any = await getRefreshTokenData(refreshToken);
-    return newAccessToken(payload);
+    // checks for user accessess
+    await userAccessChecks(payload?.uid);
+    try {
+      return newAccessToken(payload);
+    } catch (error) {
+      throw createError(500, "Faild to create token");
+    }
   } catch (error) {
-    throw createError(400, error);
+    throw error;
   }
+};
+
+export const userAccessChecks = async (uid: string) => {
+  try {
+    let userData: any;
+    try {
+      userData = await db.users.findOne({ uid: uid });
+    } catch (error) {
+      throw createError(500, "Oops something went wrong, Try after some time");
+    }
+    if (!userData) throw createError(400, "Can't find user account with given data");
+    if (userData.disabled) throw createError(401, "Disabled User");
+  } catch (error) {
+    throw error;
+  }
+  return true;
 };
 
 // function that runs on every request
@@ -130,6 +156,11 @@ export const signInUser = async ({ idToken }: { idToken: string }) => {
     // saves refresh token to db
     try {
       await new db.refreshTockens({ value: tokensForUser.refreshToken, uid: userDataFromFirebase.uid }).save();
+      try {
+        await db.users.updateOne({ uid: userDataFromFirebase.uid }, { $set: { lastLogin: new Date() } });
+      } catch (error) {
+        // error while updating login time
+      }
     } catch (error) {
       throw createError(500, `${existingData ? "" : "User created but "}Faild to login. Try to login after some time`);
     }

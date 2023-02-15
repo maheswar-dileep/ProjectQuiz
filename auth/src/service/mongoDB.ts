@@ -31,6 +31,10 @@ export const users = db.model(
     createdAt: { type: Date, default: new Date() },
     lastLogin: { type: Date, default: new Date() },
     lastRefresh: { type: Date, default: new Date() },
+    steps: {
+      type: Number,
+      default: 0,
+    },
     preferences: {
       type: Object,
       default: {
@@ -38,10 +42,6 @@ export const users = db.model(
         subjects: [],
         knowlageLevel: Number,
         difficulty: {
-          type: Number,
-          default: 0,
-        },
-        steps: {
           type: Number,
           default: 0,
         },

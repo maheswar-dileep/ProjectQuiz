@@ -21,7 +21,7 @@ app.use(checks);
 // Main Routes
 app.get("/user_data", auth.mustLoginAsUser, controller.getUserData);
 app.post("/signin", controller.signIn);
-app.post("/generate_refresh_token", controller.generateRefreshToken);
+app.post("/generate_access_token", controller.generateAccessToken);
 
 // test route
 app.get("/test", (req, res) => res.send("<h1>Auth server is running...</h1>"));

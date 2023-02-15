@@ -29,13 +29,47 @@ function App() {
   const showFullPageLoader = () => loader.current.classList.add("show");
   const hideFullPageLoader = () => loader.current.classList.remove("show");
 
+  const updateUserData = async () => {
+    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
+    // if there is not token in local storage
+    if (!refreshToken) setUser(null);
+    else
+      try {
+        // get user data from server
+        const res = await authServer.get("/user_data", { headers: { authorization: `Bearer ${accessToken}` } });
+        // set user data;
+        setUser(res.data?.data);
+        return true;
+        //..
+      } catch (error) {
+        try {
+          if (!error.response?.status === 401) throw error;
+          // headers whith refresh token
+          const headers = { headers: { authorization: `Bearer ${refreshToken}` } };
+          // new access token response from server
+          const res = await authServer.post("/generate_access_token", {}, headers);
+          // save new access token to local storage
+          localStorage.setItem("accessToken", res.data?.data?.accessToken);
+          // re requesting data from server
+          updateUserData();
+          return true;
+        } catch (error) {
+          // error while accessing data or error while getting new access token
+          console.warn(error);
+          return false;
+        }
+      }
+    return false;
+  };
+
+  console.log(user)
+
   // this use effect act as data initializer for entier application
   useEffect(() => {
-    //
     const getUserData = async () => {
       const accessToken = localStorage.getItem("accessToken");
       const refreshToken = localStorage.getItem("refreshToken");
-
       // if there is not token in local storage
       if (!refreshToken) setUser(null);
       else
@@ -52,7 +86,7 @@ function App() {
             // headers whith refresh token
             const headers = { headers: { authorization: `Bearer ${refreshToken}` } };
             // new access token response from server
-            const res = await authServer.post("/generate_refresh_token", {}, headers);
+            const res = await authServer.post("/generate_access_token", {}, headers);
             // save new access token to local storage
             localStorage.setItem("accessToken", res.data?.data?.accessToken);
             // re requesting data from server
@@ -64,9 +98,9 @@ function App() {
             return false;
           }
         }
-
       return false;
     };
+    //
 
     showFullPageLoader();
     const loadingHideDelay = Date.now() + 500; // loading will show for atleast 1/2s.
@@ -80,7 +114,7 @@ function App() {
 
   return (
     <LoaderFullPage.Provider value={{ showFullPageLoader, hideFullPageLoader }}>
-      <User.Provider value={{ user, setUser }}>
+      <User.Provider value={{ user, setUser, updateUserData }}>
         <div className="App">
           <div className="loadingFullPage" ref={loader}>
             <div className="banter-loader">

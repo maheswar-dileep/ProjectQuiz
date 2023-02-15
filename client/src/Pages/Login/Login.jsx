@@ -8,6 +8,8 @@ import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 
 import { authConfig } from "../../Services/Firebase";
 import { useRef } from "react";
 import { authServer } from "../../Services/Axios";
+import { useContext } from "react";
+import userContext from "../../context/User";
 
 function Login() {
   const passwordInput = useRef("");
@@ -22,6 +24,7 @@ function Login() {
     message: "Hi, Do I know You? Lets see...",
   });
 
+  const user = useContext(userContext);
   const navigate = useNavigate();
 
   // reset all input color to default
@@ -36,9 +39,7 @@ function Login() {
   const firebaseAuthentication = async (type) => {
     try {
       // error message for empty fields
-      const incompleteFieldErr = {
-        code: "auth/plz-fillout-all-required-fields",
-      };
+      const incompleteFieldErr = { code: "auth/plz-fillout-all-required-fields" };
 
       if (type === "Email" && !email && !password) throw incompleteFieldErr;
 
@@ -72,6 +73,7 @@ function Login() {
         message: "Login success",
       });
       // sends user to desired page after login
+      user.updateUserData();
       navigate("/");
       // ...
     } catch (errorResponse) {
@@ -117,19 +119,19 @@ function Login() {
           <p>
             Show password
             {!showPassword && (
-              <span onClick={(e) => setShowPassword(true)} className="material-symbols-outlined">
+              <span onClick={() => setShowPassword(true)} className="material-symbols-outlined">
                 check_box_outline_blank
               </span>
             )}
             {showPassword && (
-              <span onClick={(e) => setShowPassword(false)} className="material-symbols-outlined">
+              <span onClick={() => setShowPassword(false)} className="material-symbols-outlined">
                 check_box
               </span>
             )}
           </p>
-          <button onClick={(e) => firebaseAuthentication("Email")}>Continue</button>
+          <button onClick={() => firebaseAuthentication("Email")}>Continue</button>
         </div>
-        <div className="signup" onClick={(e) => navigate("/signup")}>
+        <div className="signup" onClick={() => navigate("/signup")}>
           Don't have account ? SIGNUP
         </div>
         <div className="or">
@@ -138,7 +140,7 @@ function Login() {
           <div></div>
         </div>
         <div className="providers">
-          <button className="g" onClick={(e) => firebaseAuthentication("Google")}>
+          <button className="g" onClick={() => firebaseAuthentication("Google")}>
             <img src={googleIcn} alt="" /> Continue with google
           </button>
           <button className="g h">

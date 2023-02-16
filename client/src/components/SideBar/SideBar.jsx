@@ -1,7 +1,4 @@
-import React from "react";
-import { useContext } from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import User from "../../context/User";
 import "./SideBar.css";
@@ -71,7 +68,11 @@ function SideBar(PageContent) {
 
             {userContext?.user && (
               <div className="userData">
-                <img src={`${userContext?.user?.photoURL?userContext?.user?.photoURL:"/img/Profile-Demo.jpg"}`} alt="img" className="profile-img" />
+                <img
+                  src={`${userContext?.user?.photoURL ? userContext?.user?.photoURL : "/img/Profile-Demo.jpg"}`}
+                  alt="img"
+                  className="profile-img"
+                />
                 {show && (
                   <div className="userInfo">
                     <b>{userContext?.user?.name}</b>

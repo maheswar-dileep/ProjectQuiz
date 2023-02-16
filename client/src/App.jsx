@@ -63,8 +63,6 @@ function App() {
     return false;
   };
 
-  console.log(user)
-
   // this use effect act as data initializer for entier application
   useEffect(() => {
     const getUserData = async () => {
